@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fastapi-service
+  name: ballroomedellin-services
 spec:
   selector:
-    app: fastapi-app
+    app: bm-services
   ports:
     - protocol: TCP
       port: 80
