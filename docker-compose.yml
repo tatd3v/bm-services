@@ -1,0 +1,32 @@
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bm-services_container
+    image: bm-services
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    networks:
+      - app_network
+    ports:
+      - "8080:8000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - fastapi
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
