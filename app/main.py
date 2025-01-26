@@ -8,11 +8,16 @@ YOUTUBE_CHANNEL_ID = os.getenv("YOUTUBE_CHANNEL_ID")
 
 app = FastAPI(title="Ballroom Medellin API")
 
-origins = [
-    "http://localhost",
-    "http://localhost:5173",
-    "https://ballroomedellin.com",
-]
+if os.getenv("ENV") == "production":
+    origins = [
+        "https://ballroomedellin.com",
+    ]
+else:
+    origins = [
+        "http://localhost",
+        "http://localhost:5173",
+        "https://localhost",
+    ]
 
 app.add_middleware(
     CORSMiddleware,
