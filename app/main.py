@@ -9,6 +9,7 @@ YOUTUBE_CHANNEL_ID = os.getenv("YOUTUBE_CHANNEL_ID")
 app = FastAPI(title="Ballroom Medellin API")
 
 origins = [
+    "http://localhost",
     "http://localhost:5173",
     "https://ballroomedellin.com",
 ]
@@ -20,14 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.middleware("http")
-async def add_cors_headers(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-    response.headers["Access-Control-Allow-Headers"] = "*"
-    return response
 
 app.include_router(youtube_router, prefix="/api/v1/youtube")
 
