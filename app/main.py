@@ -11,6 +11,7 @@ app = FastAPI(title="Ballroom Medellin API")
 if os.getenv("ENV") == "production":
     origins = [
         "https://ballroomedellin.com",
+        "https://development.ballroomedellin.com",
     ]
 else:
     origins = [
