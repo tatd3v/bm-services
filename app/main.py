@@ -30,19 +30,6 @@ ALLOWED_ORIGINS = (
     ]
 )
 
-
-if os.getenv("ENV") == "production":
-    origins = [
-        "https://www.ballroomedellin.com",
-        "https://development.ballroomedellin.com",
-    ]
-else:
-    origins = [
-        "http://localhost",
-        "http://localhost:5173",
-        "https://localhost",
-    ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
