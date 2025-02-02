@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI, Request
+from dotenv import load_dotenv
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.youtube import youtube_router
 
@@ -9,7 +10,7 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 YOUTUBE_CHANNEL_ID = os.getenv("YOUTUBE_CHANNEL_ID")
 
 if not YOUTUBE_API_KEY or not YOUTUBE_CHANNEL_ID:
-    raise ValueError(
+    raise RuntimeError(
         "Missing required environment variables: YOUTUBE_API_KEY or YOUTUBE_CHANNEL_ID"
     )
 
@@ -45,7 +46,7 @@ app.include_router(youtube_router, prefix="/api/v1/youtube")
 async def youtube_info():
     if not YOUTUBE_CHANNEL_ID:
         raise HTTPException(
-            status_code=500, detail="Falta la configuración del canal de YouTube."
+            status_code=500, detail="Missing YouTube channel configuration."
         )
 
     return {"channel_id": YOUTUBE_CHANNEL_ID}
