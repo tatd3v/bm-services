@@ -18,18 +18,14 @@ app = FastAPI(title="Ballroom Medellin API")
 
 ENV = os.getenv("ENV", "development")
 
-ALLOWED_ORIGINS = (
-    [
-        "https://www.ballroomedellin.com",
-        "https://development.ballroomedellin.com",
-    ]
-    if ENV == "production"
-    else [
-        "http://localhost",
-        "http://localhost:5173",
-        "https://localhost",
-    ]
-)
+ALLOWED_ORIGINS = [
+    "https://www.ballroomedellin.com",
+    "https://development.ballroomedellin.com",
+    "http://localhost",
+    "http://localhost:5173",
+    "https://localhost:5173",
+    "https://localhost",
+]
 
 app.add_middleware(
     CORSMiddleware,
