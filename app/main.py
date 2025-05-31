@@ -1,7 +1,10 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import Depends, FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import SQLAlchemyError
+from app.utils.database import get_db
 from app.routes.youtube import youtube_router
 
 load_dotenv()
@@ -46,3 +49,11 @@ async def youtube_info():
         )
 
     return {"channel_id": YOUTUBE_CHANNEL_ID}
+
+@app.get("/calendar-events")
+async def calendar_events(db: AsyncSession = Depends(get_db)):
+    try:
+        await db.execute("SELECT 1")
+        return {"status": "Database connection successful"}
+    except SQLAlchemyError:
+        raise HTTPException(status_code=500, detail="Database connection failed")
