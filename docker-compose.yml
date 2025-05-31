@@ -1,9 +1,21 @@
 services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   fastapi:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: bm-services_container
+    restart: unless-stopped
     image: bm-services
     expose:
       - "8000"
@@ -17,6 +29,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx_server
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -31,3 +44,6 @@ services:
 networks:
   app_network:
     driver: bridge
+
+volumes:
+  postgres_data:
