@@ -3,3 +3,5 @@ uvicorn==0.32.1
 google-api-python-client==2.156.0
 python-dotenv==1.0.1
 pydantic==2.10.2
+sqlalchemy[asyncio]==2.0.38
+asyncpg==0.30.0
