@@ -23,7 +23,7 @@ ENV = os.getenv("ENV", "development")
 
 ALLOWED_ORIGINS = [
     "https://www.ballroomedellin.com",
-    "https://development.ballroomedellin.com",
+    "https://dev.ballroomedellin.com",
     "http://localhost",
     "http://localhost:5173",
     "https://localhost:5173",
