@@ -17,7 +17,12 @@ if not YOUTUBE_API_KEY or not YOUTUBE_CHANNEL_ID:
         "Missing required environment variables: YOUTUBE_API_KEY or YOUTUBE_CHANNEL_ID"
     )
 
-app = FastAPI(title="Ballroom Medellin API")
+app = FastAPI(
+    title="Ballroom Medellin API",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
+)
 
 ENV = os.getenv("ENV", "development")
 
@@ -49,6 +54,7 @@ async def youtube_info():
         )
 
     return {"channel_id": YOUTUBE_CHANNEL_ID}
+
 
 @app.get("/calendar-events")
 async def calendar_events(db: AsyncSession = Depends(get_db)):
