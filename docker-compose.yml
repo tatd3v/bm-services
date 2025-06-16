@@ -15,16 +15,14 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: bm-services_container
-    restart: unless-stopped
     image: bm-services
-    expose:
-      - "8000"
+    restart: unless-stopped
     env_file:
       - .env
+    expose:
+      - "8000"
     networks:
       - app_network
-    ports:
-      - "8080:8000"
 
   nginx:
     image: nginx:latest
@@ -34,8 +32,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /home/queen/certs:/etc/nginx/certs:ro
     depends_on:
       - fastapi
     networks:
